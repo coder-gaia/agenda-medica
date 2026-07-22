@@ -273,23 +273,23 @@ Todos os erros retornam mensagens amigáveis ao usuário e são registrados em l
 
 ## Login
 
-![login_page](login.png)
+![login_page](screenshots/login.png)
 
 ---
 
 ## Agenda Médica
 
-![scheduling_page](agendamentos.png)
+![scheduling_page](screenshots/agendamentos.png)
 
 ---
 
 ## Busca
 
-## ![scheduling_search_page](busca.png)
+## ![scheduling_search_page](screenshots/busca.png)
 
 ## Nenhum Resultado
 
-## ![name_not_found](busca_n_encontrada.png)
+## ![name_not_found](screenshots/busca_n_encontrada.png)
 
 # 💡 Decisões Técnicas
 

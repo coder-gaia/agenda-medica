@@ -1,5 +1,12 @@
+import { AuthProvider } from "./context/AuthProvider";
+import { AppRouter } from "./router";
+
 function App() {
-  return <h1>Agenda Médica</h1>;
+  return (
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
+  );
 }
 
 export default App;

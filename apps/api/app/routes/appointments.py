@@ -1,4 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, request
+
+from app.exceptions.appointment_exceptions import (
+    AppointmentApiInvalidResponseError,
+    AppointmentApiUnavailableError,
+)
 
 from app.services.appointment_service import AppointmentService
 from app.utils.responses import error, success
@@ -13,18 +18,48 @@ appointments_bp = Blueprint(
 @appointments_bp.get("/appointments")
 def get_appointments():
 
+    search = request.args.get(
+        "search"
+    )
+
     try:
 
-        appointments = AppointmentService.get_all()
+        appointments = AppointmentService.get_all(
+            search
+        )
+
+        if not appointments:
+
+            return success(
+                [],
+                "Nenhum agendamento encontrado."
+            )
 
         return success(
             appointments,
             "Agendamentos encontrados."
         )
 
+
+    except AppointmentApiUnavailableError:
+
+        return error(
+            "Agendamentos temporariamente fora do ar.",
+            503,
+        )
+
+
+    except AppointmentApiInvalidResponseError:
+
+        return error(
+            "Resposta inválida do servico de agendamentos.",
+            502,
+        )
+
+
     except Exception:
 
         return error(
-            "Erro ao buscar agendamentos.",
-            500
+            "Erro interno do servidor.",
+            500,
         )

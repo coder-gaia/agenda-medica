@@ -9,6 +9,8 @@ import type { Appointment } from "../../types/appointment";
 import styles from "./Agenda.module.css";
 import SearchBar from "../../components/SearchBar/SearchBar";
 
+import Alert from "../../components/Alert/Alert";
+
 export default function Agenda() {
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -27,7 +29,7 @@ export default function Agenda() {
       setMessage(response.message ?? "");
     } catch {
       setAppointments([]);
-      setMessage("Não foi possível carregar os agendamentos.");
+      setMessage("Não foi possível carregar os agendamentos. Tente novamente.");
     } finally {
       setLoading(false);
     }
@@ -73,12 +75,10 @@ export default function Agenda() {
             key={appointments.length}
             data={appointments}
           />
-
-          {message && (
-            <p className={styles.message}>
-              {message}
-            </p>
-          )}
+            <Alert 
+            message={message} 
+            type={appointments.length ? "success" : "warning"}
+            />
         </>
       )}
     </div>

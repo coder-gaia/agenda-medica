@@ -30,3 +30,22 @@ services:
 
     volumes:
       - ./apps/mock-api:/app
+
+  web:
+    build:
+      context: ./apps/web
+
+    container_name: agenda-web
+
+    ports:
+      - "5173:5173"
+
+    env_file:
+      - ./apps/web/.env.docker
+
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+
+    depends_on:
+      - api

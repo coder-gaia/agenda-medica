@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useDebounce } from "../../hooks/useDebounce";
 
 import styles from "./SearchBar.module.css";
 
@@ -9,31 +11,20 @@ type Props = {
 export default function SearchBar({ onSearch }: Props) {
   const [value, setValue] = useState("");
 
-  function handleSearch() {
-    onSearch(value.trim());
-  }
+  const debouncedValue = useDebounce(value, 500);
+
+  useEffect(() => {
+    onSearch(debouncedValue.trim());
+  }, [debouncedValue, onSearch]);
 
   return (
     <div className={styles.container}>
       <input
         className={styles.input}
-        type="text"
         placeholder="Buscar paciente, CPF ou médico..."
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handleSearch();
-          }
-        }}
       />
-
-      <button
-        className={styles.button}
-        onClick={handleSearch}
-      >
-        Buscar
-      </button>
     </div>
   );
 }

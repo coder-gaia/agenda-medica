@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AppointmentTable from "../../components/AppointmentTable/AppointmentTable";
@@ -21,21 +21,22 @@ export default function Agenda() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function handleSearch(term = "") {
-    setLoading(true);
+  const handleSearch = useCallback(async (term = "") => {
+  setLoading(true);
 
-    try {
-      const response = await getAppointments(term);
+  try {
+    const response = await getAppointments(term);
 
-      setAppointments(response.data ?? []);
-      setMessage(response.message ?? "");
-    } catch {
-      setAppointments([]);
-      setMessage("Não foi possível carregar os agendamentos. Tente novamente.");
-    } finally {
-      setLoading(false);
-    }
+    setAppointments(response.data ?? []);
+    setMessage(response.message ?? "");
+  } catch {
+    setAppointments([]);
+    setMessage("Não foi possível carregar os agendamentos. Tente novamente.");
+  } finally {
+    setLoading(false);
   }
+}, []);
+
 
   function handleLogout() {
     logout();
@@ -58,15 +59,6 @@ export default function Agenda() {
             Logout
           </button>
         </div>
-      </div>
-
-      <div style={{ marginBottom: 16 }}>
-        <button
-          className={styles.button}
-          onClick={() => handleSearch()}
-        >
-          Carregar Agendamentos
-        </button>
       </div>
 
       {loading ? (

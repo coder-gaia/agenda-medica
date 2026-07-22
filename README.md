@@ -145,12 +145,18 @@ Para executar localmente é necessário possuir:
 
 A aplicação utiliza variáveis de ambiente para configuração dos serviços.
 
-Exemplo:
+backend
 
 ```env
 DATABASE_URL=sqlite:///database.db
 MOCK_API_URL=http://mock-api:5001
 SECRET_KEY=secret
+```
+
+frontend
+
+```env
+VITE_API_URL=http://localhost:5000/ap
 ```
 
 As configurações são carregadas sem necessidade de alteração no código fonte.
@@ -163,12 +169,6 @@ Na raiz do projeto:
 
 ```bash
 docker compose up --build
-```
-
-Após iniciar os containers, execute o seed do banco:
-
-```bash
-docker exec -it agenda-api python seed.py
 ```
 
 ---
@@ -263,10 +263,10 @@ npm run dev
 
 # 👤 Credenciais de Teste
 
-| Campo | Valor                                       |
-| ----- | ------------------------------------------- |
-| Login | [admin@agenda.com](mailto:admin@agenda.com) |
-| Senha | 123456                                      |
+| Campo | Valor                                     |
+| ----- | ----------------------------------------- |
+| Login | [admin@email.com](mailto:admin@email.com) |
+| Senha | 123456                                    |
 
 ---
 
@@ -282,7 +282,7 @@ Body:
 
 ```json
 {
-  "login": "admin@agenda.com",
+  "login": "admin@email.com",
   "password": "123456"
 }
 ```
@@ -293,7 +293,7 @@ Resposta:
 {
   "message": "Login realizado com sucesso",
   "user": {
-    "email": "admin@agenda.com"
+    "email": "admin@email.com"
   }
 }
 ```

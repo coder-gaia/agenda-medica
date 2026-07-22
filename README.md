@@ -143,9 +143,9 @@ Para executar localmente é necessário possuir:
 
 # 🔐 Variáveis de Ambiente
 
-A aplicação utiliza variáveis de ambiente para configuração dos serviços.
+A aplicação utiliza variáveis de ambiente para configuração dos serviços, portanto, deve se criar arquivos .env em suas respectivas raízes.
 
-backend
+agenda-medica/apps/api/.env
 
 ```env
 DATABASE_URL=sqlite:///database.db
@@ -153,7 +153,13 @@ MOCK_API_URL=http://mock-api:5001
 SECRET_KEY=secret
 ```
 
-frontend
+agenda-medica/apps/web/.env
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+agenda-medica/apps/mock-api/.env
 
 ```env
 VITE_API_URL=http://localhost:5000/api

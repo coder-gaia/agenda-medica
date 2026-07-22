@@ -6,6 +6,8 @@ services:
 
     container_name: agenda-api
 
+    command: sh -c "python seed.py && python run.py"
+
     ports:
       - "5000:5000"
 

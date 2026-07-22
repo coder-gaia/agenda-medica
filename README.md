@@ -9,7 +9,7 @@
 Clone o repositório:
 
 ```bash
-git clone https://github.com/alexandregaiaa/agenda-medica.git
+git clone https://github.com/coder-gaia/agenda-medica.git
 
 cd agenda-medica
 ```

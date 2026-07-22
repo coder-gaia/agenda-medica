@@ -7,6 +7,9 @@ from flask_cors import CORS
 from app.config import Config
 from app.database.database import db
 
+from app.routes.auth import auth_bp
+
+from app.routes import register_routes
 
 def create_app():
 
@@ -17,6 +20,8 @@ def create_app():
     CORS(app)
 
     db.init_app(app)
+    
+    register_routes(app)
 
     configure_logging()
 

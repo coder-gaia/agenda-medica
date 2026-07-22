@@ -11,6 +11,8 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 
 import Alert from "../../components/Alert/Alert";
 
+import Loading from "../../components/Loading/Loading";
+
 export default function Agenda() {
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -68,7 +70,7 @@ export default function Agenda() {
       </div>
 
       {loading ? (
-        <p>Carregando...</p>
+        <Loading />
       ) : (
         <>
           <AppointmentTable

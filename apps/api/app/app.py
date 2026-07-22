@@ -1,6 +1,3 @@
-import logging
-import os
-
 from flask import Flask
 from flask_cors import CORS
 
@@ -11,9 +8,13 @@ from app.routes.auth import auth_bp
 
 from app.routes import register_routes
 
+from app.utils.logger import setup_logger
+
 def create_app():
 
     app = Flask(__name__)
+    
+    setup_logger()
 
     app.config.from_object(Config)
 
@@ -22,8 +23,6 @@ def create_app():
     db.init_app(app)
     
     register_routes(app)
-
-    configure_logging()
 
     with app.app_context():
         db.create_all()
@@ -37,12 +36,3 @@ def create_app():
     return app
 
 
-def configure_logging():
-
-    os.makedirs("app/logs", exist_ok=True)
-
-    logging.basicConfig(
-        filename="app/logs/app.log",
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s %(message)s"
-    )

@@ -48,6 +48,10 @@ class AppointmentService:
 
         try:
 
+            logger.info(
+                "Consultando API de agendamentos."
+            )
+
             response = requests.get(
                 f"{Config.MOCK_API_URL}/appointments",
                 timeout=5,

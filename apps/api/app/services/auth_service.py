@@ -4,9 +4,10 @@ from werkzeug.security import check_password_hash
 
 from app.models.user import User
 
+logger = logging.getLogger(__name__)
 
 class AuthService:
-
+    
     @staticmethod
     def login(login: str, password: str):
 
@@ -15,13 +16,13 @@ class AuthService:
         ).first()
 
         if not user:
-            logging.warning("Tentativa de login com usuário inexistente.")
+            logger.warning("Tentativa de login com usuário inexistente.")
             return None
 
         if not check_password_hash(user.password, password):
-            logging.warning(f"Senha inválida para {login}.")
+            logger.warning(f"Senha inválida para {login}.")
             return None
 
-        logging.info(f"Login realizado por {user.email}")
+        logger.info(f"Login realizado por {user.email}")
 
         return user

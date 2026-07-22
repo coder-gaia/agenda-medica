@@ -8,12 +8,12 @@ from app.exceptions.appointment_exceptions import (
 from app.services.appointment_service import AppointmentService
 from app.utils.responses import error, success
 
+import logging
 
 appointments_bp = Blueprint(
     "appointments",
     __name__,
 )
-
 
 @appointments_bp.get("/appointments")
 def get_appointments():
@@ -57,9 +57,13 @@ def get_appointments():
         )
 
 
-    except Exception:
+    except Exception as exc:
 
-        return error(
-            "Erro interno do servidor.",
-            500,
-        )
+        logging.exception(
+        f"Erro inesperado: {exc}"
+    )
+
+    return error(
+        "Erro interno do servidor.",
+        500
+    )

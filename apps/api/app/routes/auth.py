@@ -3,6 +3,8 @@ from flask import Blueprint, request
 from app.services.auth_service import AuthService
 from app.utils.responses import error, success
 
+from app.exceptions.database_exceptions import DatabaseConnectionError
+
 auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.post("/login")
@@ -19,13 +21,20 @@ def login():
     if not login or not password:
         return error("Login e senha são obrigatórios.")
 
-    user = AuthService.login(login, password)
+    try:
+        user = AuthService.login(login, password)
+
+    except DatabaseConnectionError:
+        return error(
+        "Não foi possível acessar o banco de dados.",
+        500
+    )
 
     if not user:
         return error(
             "Usuário ou senha inválidos.",
-            401
-        )
+        401
+    )
 
     return success(
         {

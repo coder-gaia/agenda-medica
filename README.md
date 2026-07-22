@@ -156,7 +156,7 @@ SECRET_KEY=secret
 frontend
 
 ```env
-VITE_API_URL=http://localhost:5000/ap
+VITE_API_URL=http://localhost:5000/api
 ```
 
 As configurações são carregadas sem necessidade de alteração no código fonte.

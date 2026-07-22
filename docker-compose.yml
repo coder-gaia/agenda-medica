@@ -1,0 +1,32 @@
+services:
+
+  api:
+    build:
+      context: ./apps/api
+
+    container_name: agenda-api
+
+    ports:
+      - "5000:5000"
+
+    env_file:
+      - ./apps/api/.env.docker
+
+    depends_on:
+      - mock-api
+
+    volumes:
+      - ./apps/api:/app
+      - ./data:/app/instance
+
+  mock-api:
+    build:
+      context: ./apps/mock-api
+
+    container_name: agenda-mock-api
+
+    ports:
+      - "5001:5001"
+
+    volumes:
+      - ./apps/mock-api:/app

@@ -7,13 +7,13 @@ import { getAppointments } from "../../services/appointments";
 import type { Appointment } from "../../types/appointment";
 
 import styles from "./Agenda.module.css";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 export default function Agenda() {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -44,19 +44,8 @@ export default function Agenda() {
         <h2>Agenda Médica</h2>
 
         <div className={styles.actions}>
-          <input
-            className={styles.input}
-            placeholder="Buscar paciente, CPF ou médico..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
 
-          <button
-            className={styles.button}
-            onClick={() => handleSearch(search)}
-          >
-            Buscar
-          </button>
+        <SearchBar onSearch={handleSearch} />
 
           <button
             className={styles.button}

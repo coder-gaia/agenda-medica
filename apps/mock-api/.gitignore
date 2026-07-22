@@ -17,3 +17,5 @@ app/logs/
 .idea/
 
 .DS_Store
+
+data/

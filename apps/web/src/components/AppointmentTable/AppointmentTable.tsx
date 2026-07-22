@@ -3,6 +3,8 @@ import { TabulatorFull as Tabulator } from "tabulator-tables";
 
 import type { Appointment } from "../../types/appointment";
 
+import styles from "./AppointmentTable.module.css";
+
 type Props = {
   data: Appointment[];
 };
@@ -13,24 +15,39 @@ export default function AppointmentTable({ data }: Props) {
   useEffect(() => {
     if (!tableRef.current) return;
 
-    const table = new Tabulator(tableRef.current, {
-      data,
+const table = new Tabulator(tableRef.current, {
+  data,
 
-      layout: "fitColumns",
+  layout: "fitColumns",
 
-      placeholder: "Nenhum agendamento encontrado.",
+  height: "auto",
 
-      columns: [
-        { title: "Data", field: "data" },
-        { title: "Horário", field: "horario" },
-        { title: "Paciente", field: "paciente" },
-        { title: "CPF", field: "cpf" },
-        { title: "Médico", field: "medico" },
-        { title: "Especialidade", field: "especialidade" },
-        { title: "Convênio", field: "convenio" },
-        { title: "Status", field: "status" },
-      ],
-    });
+  responsiveLayout: "collapse",
+
+  placeholder: "Nenhum agendamento encontrado para a busca realizada.",
+
+  pagination: true,
+  paginationSize: 5,
+  paginationSizeSelector: [5, 10, 20],
+
+  columns: [
+    { title: "Data", field: "data", headerSort: true },
+    { title: "Horário", field: "horario", headerSort: true },
+    { title: "Paciente", field: "paciente", headerSort: true },
+    { title: "CPF", field: "cpf", headerSort: true },
+    { title: "Médico", field: "medico", headerSort: true },
+    { title: "Especialidade", field: "especialidade", headerSort: true },
+    { title: "Convênio", field: "convenio", headerSort: true },
+    {
+      title: "Status",
+      field: "status",
+      headerSort: true,
+      formatter(cell) {
+        return `<strong>${cell.getValue()}</strong>`;
+      },
+    },
+  ],
+});
 
     return () => {
       try {
@@ -41,5 +58,10 @@ export default function AppointmentTable({ data }: Props) {
     };
   }, [data]);
 
-  return <div ref={tableRef} />;
+  return (
+    <div
+        ref={tableRef}
+        className={styles.table}
+    />
+);
 }

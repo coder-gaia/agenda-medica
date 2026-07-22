@@ -67,7 +67,7 @@ export default function Agenda() {
         <SearchBar onSearch={handleSearch} />
 
           <button
-            className={styles.button}
+            className={styles.logoutButton}
             onClick={handleLogout}
           >
             Logout
@@ -75,19 +75,19 @@ export default function Agenda() {
         </div>
       </div>
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className={styles.card}>
+      {loading && <Loading />}
+
+      {!loading && (
+      <div className={styles.card}>
           <AppointmentTable
             key={appointments.length}
             data={appointments}
           />
-            <Alert 
+          <Alert 
             message={message} 
             type={appointments.length ? "success" : "warning"}
             />
-        </div>
+      </div>
       )}
     </div>
   );

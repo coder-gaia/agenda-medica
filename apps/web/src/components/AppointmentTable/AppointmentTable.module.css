@@ -1,0 +1,30 @@
+.table {
+  width: 100%;
+}
+
+.table :global(.tabulator) {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #d9d9d9;
+  font-size: 14px;
+}
+
+.table :global(.tabulator-header) {
+  background: #f3f4f6;
+}
+
+.table :global(.tabulator-row:hover) {
+  background: #eef6ff;
+}
+
+.table :global(.tabulator-footer) {
+  background: white;
+}
+
+.table :global(.tabulator-page) {
+  border-radius: 6px;
+}
+
+.table :global(.tabulator-col) {
+  font-weight: 600;
+}

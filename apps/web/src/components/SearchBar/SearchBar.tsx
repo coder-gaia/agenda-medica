@@ -24,6 +24,11 @@ export default function SearchBar({ onSearch }: Props) {
         placeholder="Buscar paciente, CPF ou médico..."
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            onSearch(value);
+        }
+    }}
       />
     </div>
   );

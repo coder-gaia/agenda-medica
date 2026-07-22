@@ -78,7 +78,7 @@ export default function Agenda() {
       {loading ? (
         <Loading />
       ) : (
-        <>
+        <div className={styles.card}>
           <AppointmentTable
             key={appointments.length}
             data={appointments}
@@ -87,7 +87,7 @@ export default function Agenda() {
             message={message} 
             type={appointments.length ? "success" : "warning"}
             />
-        </>
+        </div>
       )}
     </div>
   );

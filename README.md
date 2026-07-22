@@ -1,17 +1,35 @@
-# 🏥 Agenda Médica
+# 🏥 Agenda Médica - Desafio Técnico Full Stack
 
-> Desafio técnico desenvolvido utilizando **Python + Flask + SQLite + React (Vite)** em arquitetura **Monorepo**, com integração entre serviços via HTTP e execução completa através do Docker.
+> Aplicação desenvolvida para desafio técnico utilizando **Python + Flask + SQLite + React (Vite)** em arquitetura **Monorepo**, com integração entre serviços via HTTP e execução completa através do Docker Compose.
 
 ---
 
-## 📌 Objetivo
+# 🚀 Começando
 
-Esta aplicação foi desenvolvida para atender aos requisitos do desafio técnico proposto, simulando um sistema simples de Agenda Médica.
+Clone o repositório:
+
+```bash
+git clone https://github.com/alexandregaiaa/agenda-medica.git
+
+cd agenda-medica
+```
+
+A aplicação pode ser executada de duas formas:
+
+- Docker Compose (recomendado)
+- Execução manual dos serviços
+
+---
+
+# 📌 Objetivo
+
+Esta aplicação foi desenvolvida para atender aos requisitos de um desafio técnico, simulando um sistema simples de **Agenda Médica**.
 
 O sistema permite:
 
 - Autenticação de usuários utilizando SQLite;
-- Consulta de agendamentos através de uma API HTTP;
+- Consulta de agendamentos através de API HTTP;
+- Integração com API externa simulada;
 - Busca de pacientes, CPF ou médico;
 - Exibição dos dados em tabela utilizando Tabulator;
 - Tratamento de falhas e cenários de erro;
@@ -49,9 +67,10 @@ O sistema permite:
 
 ```text
 agenda-medica
+
 │
 ├── apps
-│   │
+│
 │   ├── api
 │   │   ├── app
 │   │   ├── instance
@@ -59,13 +78,13 @@ agenda-medica
 │   │   ├── requirements.txt
 │   │   ├── run.py
 │   │   └── seed.py
-│   │
+│
 │   ├── mock-api
 │   │   ├── app
 │   │   ├── data
 │   │   ├── Dockerfile
 │   │   └── run.py
-│   │
+│
 │   └── web
 │       ├── src
 │       ├── package.json
@@ -83,26 +102,37 @@ agenda-medica
 # 🏗 Arquitetura
 
 ```text
-               React + Vite
+                React + Vite
                      │
                      │ HTTP
                      ▼
              Flask API Principal
                      │
-         ┌───────────┴────────────┐
-         │                        │
-         ▼                        ▼
-     SQLite                 Mock API
- (Usuários/Login)      (Agendamentos)
+        ┌────────────┴────────────┐
+        │                         │
+        ▼                         ▼
+     SQLite                  Mock API
+ (Usuários/Login)       (Agendamentos)
 ```
 
-A API principal é responsável pela autenticação dos usuários e pela integração com uma API externa simulada (Mock API), conforme solicitado no desafio.
+## Fluxo da Aplicação
+
+1. Usuário acessa o Frontend React.
+2. Usuário informa suas credenciais.
+3. Frontend envia autenticação para a API Flask.
+4. API valida o usuário utilizando SQLite.
+5. Usuário autenticado consulta os agendamentos.
+6. API principal realiza integração HTTP com a Mock API.
+7. Dados são tratados e enviados ao Frontend.
+8. React renderiza os resultados utilizando Tabulator.
+
+A API principal é responsável pela autenticação e integração com a API simulada de agendamentos.
 
 ---
 
 # ⚙️ Pré-requisitos
 
-Para executar localmente é necessário possuir instalado:
+Para executar localmente é necessário possuir:
 
 - Python 3
 - Node.js
@@ -111,53 +141,19 @@ Para executar localmente é necessário possuir instalado:
 
 ---
 
-# ▶️ Executando Localmente
+# 🔐 Variáveis de Ambiente
 
-## 1 - API
+A aplicação utiliza variáveis de ambiente para configuração dos serviços.
 
-```bash
-cd apps/api
+Exemplo:
 
-python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-
-python seed.py
-
-python run.py
+```env
+DATABASE_URL=sqlite:///database.db
+MOCK_API_URL=http://mock-api:5001
+SECRET_KEY=secret
 ```
 
----
-
-## 2 - Mock API
-
-```bash
-cd apps/mock-api
-
-python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-
-python run.py
-```
-
----
-
-## 3 - Frontend
-
-```bash
-cd apps/web
-
-npm install
-
-npm run dev
-```
+As configurações são carregadas sem necessidade de alteração no código fonte.
 
 ---
 
@@ -177,19 +173,100 @@ docker exec -it agenda-api python seed.py
 
 ---
 
-# 👤 Usuário para Testes
+# 🌐 Acessos
 
-```
-Login:
+Após iniciar a aplicação:
 
-admin@agenda.com
+| Serviço       | URL                   |
+| ------------- | --------------------- |
+| Frontend      | http://localhost:5173 |
+| API Principal | http://localhost:5000 |
+| Mock API      | http://localhost:5001 |
+
+---
+
+# ▶️ Executando Localmente
+
+## 1 - API Principal
+
+```bash
+cd apps/api
+
+python -m venv .venv
 ```
 
-```
-Senha:
+Windows:
 
-123456
+```bash
+.venv\Scripts\activate
 ```
+
+Instalação das dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+Inicialização do banco:
+
+```bash
+python seed.py
+```
+
+Executar API:
+
+```bash
+python run.py
+```
+
+---
+
+## 2 - Mock API
+
+```bash
+cd apps/mock-api
+
+python -m venv .venv
+```
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Instalação:
+
+```bash
+pip install -r requirements.txt
+```
+
+Executar:
+
+```bash
+python run.py
+```
+
+---
+
+## 3 - Frontend
+
+```bash
+cd apps/web
+
+npm install
+
+npm run dev
+```
+
+---
+
+# 👤 Credenciais de Teste
+
+| Campo | Valor                                       |
+| ----- | ------------------------------------------- |
+| Login | [admin@agenda.com](mailto:admin@agenda.com) |
+| Senha | 123456                                      |
 
 ---
 
@@ -210,12 +287,36 @@ Body:
 }
 ```
 
+Resposta:
+
+```json
+{
+  "message": "Login realizado com sucesso",
+  "user": {
+    "email": "admin@agenda.com"
+  }
+}
+```
+
 ---
 
 ## Buscar Agendamentos
 
 ```
 GET /api/appointments
+```
+
+Resposta:
+
+```json
+[
+  {
+    "patient": "Maria Silva",
+    "cpf": "12345678900",
+    "doctor": "Dr. João",
+    "date": "2026-07-21"
+  }
+]
 ```
 
 ---
@@ -226,7 +327,7 @@ GET /api/appointments
 GET /api/appointments?search=maria
 ```
 
-Também aceita:
+Também aceita busca por:
 
 - CPF
 - Médico
@@ -263,9 +364,9 @@ A aplicação trata os seguintes cenários:
 - Resposta inválida da API
 - Campos obrigatórios ausentes
 - Erro de conexão com banco de dados
-- Tratamento de exceções inesperadas
+- Exceções inesperadas
 
-Todos os erros retornam mensagens amigáveis ao usuário e são registrados em logs para facilitar a identificação da causa.
+Todos os erros retornam mensagens amigáveis ao usuário e são registrados em logs para facilitar diagnóstico.
 
 ---
 
@@ -273,36 +374,40 @@ Todos os erros retornam mensagens amigáveis ao usuário e são registrados em l
 
 ## Login
 
-![login_page](screenshots/login.png)
+![Login](screenshots/login.png)
 
 ---
 
 ## Agenda Médica
 
-![scheduling_page](screenshots/agendamentos.png)
+![Agenda Médica](screenshots/agendamentos.png)
 
 ---
 
 ## Busca
 
-## ![scheduling_search_page](screenshots/busca.png)
+![Busca](screenshots/busca.png)
+
+---
 
 ## Nenhum Resultado
 
-## ![name_not_found](screenshots/busca_n_encontrada.png)
+![Nenhum Resultado](screenshots/busca_n_encontrada.png)
+
+---
 
 # 💡 Decisões Técnicas
 
 Durante o desenvolvimento foram adotadas algumas decisões para aproximar o projeto de um ambiente real:
 
-- Arquitetura em Monorepo.
-- Separação entre API principal e Mock API.
-- Organização por camadas (Routes, Services, Models e Utils).
-- Padronização das respostas HTTP.
-- Centralização do tratamento de exceções.
-- Utilização de variáveis de ambiente.
-- Dockerização dos serviços.
-- Frontend desacoplado consumindo apenas a API principal.
+- Arquitetura em Monorepo;
+- Separação entre API principal e Mock API;
+- Organização por camadas (Routes, Services, Models e Utils);
+- Padronização das respostas HTTP;
+- Centralização do tratamento de exceções;
+- Utilização de variáveis de ambiente;
+- Dockerização dos serviços;
+- Frontend desacoplado consumindo apenas a API principal;
 - Validação da resposta recebida da Mock API antes da exibição dos dados.
 
 ---
@@ -340,14 +445,14 @@ Durante o desenvolvimento foram adotadas algumas decisões para aproximar o proj
 
 # 🚀 Melhorias Futuras
 
-- JWT para autenticação.
-- Refresh Token.
-- Cadastro de usuários.
-- Cadastro de agendamentos.
-- Exclusão e edição de consultas.
-- Testes automatizados.
-- Pipeline de CI/CD.
-- Deploy em ambiente cloud.
+- JWT para autenticação
+- Refresh Token
+- Cadastro de usuários
+- Cadastro de agendamentos
+- Exclusão e edição de consultas
+- Testes automatizados
+- Pipeline de CI/CD
+- Deploy em ambiente cloud
 
 ---
 

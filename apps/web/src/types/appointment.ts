@@ -1,4 +1,5 @@
-export interface Appointment {
+export type Appointment = {
+  id: number;
   paciente: string;
   cpf: string;
   medico: string;
@@ -7,4 +8,4 @@ export interface Appointment {
   horario: string;
   convenio: string;
   status: string;
-}
+};

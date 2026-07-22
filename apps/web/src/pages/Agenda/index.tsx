@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { AxiosError } from "axios";
+
 import AppointmentTable from "../../components/AppointmentTable/AppointmentTable";
 import { useAuth } from "../../hooks/useAuth";
 import { getAppointments } from "../../services/appointments";
@@ -29,10 +31,22 @@ export default function Agenda() {
 
     setAppointments(response.data ?? []);
     setMessage(response.message ?? "");
-  } catch {
+  }catch (error: unknown) {
+    console.error(error);
+
     setAppointments([]);
-    setMessage("Não foi possível carregar os agendamentos. Tente novamente.");
-  } finally {
+
+    if (error instanceof AxiosError) {
+      setMessage(
+        error.response?.data?.message ??
+        "Não foi possível carregar os agendamentos."
+      );
+
+      return;
+    }
+
+  setMessage("Ocorreu um erro inesperado.");
+} finally {
     setLoading(false);
   }
 }, []);
